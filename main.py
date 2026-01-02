@@ -1,6 +1,8 @@
 from keyGeneration import KeyGeneration
+prime = 251
 
-B = KeyGeneration.random_matrix()
-A = KeyGeneration.random_matrix()
+B = KeyGeneration.random_matrix(prime)
+A = KeyGeneration.random_matrix(prime)
 
-Binv = 
+Binv = KeyGeneration.invert_matrix(B, prime)
+Ainv = KeyGeneration.invert_matrix(A, prime)
