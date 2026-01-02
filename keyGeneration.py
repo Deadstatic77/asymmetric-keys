@@ -62,11 +62,14 @@ class KeyGeneration:
         return M_inv
 
 
-    def Public(x):
-        y = KeyGeneration.matrix_vector_multi(KeyGeneration.random_matrix(), x)
-        y = KeyGeneration.F_private(y)
-        y = KeyGeneration.matrix_vector_multi(KeyGeneration.random_matrix(), y)
+    def Public(x, B, A, prime):
+        y = KeyGeneration.matrix_vector_multi(B,x,prime)
+        y = KeyGeneration.F_private(y, prime)
+        y = KeyGeneration.matrix_vector_multi(A, y, prime)
         return y
     
-    def PrivateDecrypt(cipher):
-        y = KeyGeneration.matrix_vector_multi()
+    def PrivateDecrypt(cipher, Ainv, Binv, prime):
+        y = KeyGeneration.matrix_vector_multi(Ainv, cipher, prime)
+        y = KeyGeneration.F_private_inverse(y, prime)
+        x = KeyGeneration.matrix_vector_multi(Binv, y, prime)
+        return x
