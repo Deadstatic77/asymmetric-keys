@@ -68,6 +68,20 @@ class KeyGeneration:
         # << Final inverse matrix
         return [[(determinate_inverse * adj[r][c]) % prime for c in range(3)] for r in range(3)]
 
+# << Gen keypair
+    @staticmethod
+    def generate_keypair(prime):
+        A = KeyGeneration.random_matrix(prime)
+        B = KeyGeneration.random_matrix(prime)
+    
+        Ainv = KeyGeneration.invert_matrix(A, prime)
+        Binv = KeyGeneration.invert_matrix(B, prime)
+    
+        public_key = KeyGeneration.build_public_key(A, B, prime)
+        private_key = (Ainv, Binv)
+    
+        return public_key, private_key
+
 # << Build the PUBLIC KEY
 # << Expands AxFxB into explicit quadratic polynomials
 # << Each polynomial has 10 coefficients:
