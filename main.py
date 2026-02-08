@@ -1,21 +1,19 @@
 from keyGeneration import KeyGeneration
 prime = 251
 
-# << Gen random invertible matrix
-B = KeyGeneration.random_matrix(prime)
-A = KeyGeneration.random_matrix(prime)
+# << Key generation
+public_key, private_key = KeyGeneration.generate_keypair(prime)
 
-# << Compute inverse
-Binv = KeyGeneration.invert_matrix(B, prime)
-Ainv = KeyGeneration.invert_matrix(A, prime)
+print("PUBLIC KEY:", public_key)
+print("PRIVATE KEY:", private_key)
 
-# << Original private key
+# << Example plaintext vector
 x = (10,7,3)
 
-# << Encrypt
-cipher = KeyGeneration.Public(x,B,A,prime)
-print("CIPHER: ", cipher)
+# << Encryption using only pub key
+cipher = KeyGeneration.encrypt_public(x, public_key, prime)
+print("CIPHER:", cipher)
 
-# << Decrypt
-decrypt = KeyGeneration.PrivateDecrypt(cipher, Ainv, Binv, prime)
-print("DECRYPTED: ", decrypt)
+# << Encryption using only priv key
+plain = KeyGeneration.decrypt(cipher, *private_key, prime)
+print("DECRYPTED:", plain)
